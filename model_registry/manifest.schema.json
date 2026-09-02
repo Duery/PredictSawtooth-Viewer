@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://predict-sawtooth.local/schemas/model-package-v1.json",
+  "title": "PredictSawtooth model package manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "model_package_id",
+    "display_name",
+    "family",
+    "variant",
+    "runner",
+    "artifacts",
+    "target_channel",
+    "physical_input_channels",
+    "input_channels",
+    "sampling_hz",
+    "history_ms",
+    "forecast_gap_ms",
+    "prediction_ms"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "model_package_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+    "display_name": {"type": "string", "minLength": 1},
+    "family": {"type": "string", "minLength": 1},
+    "variant": {"type": "string", "minLength": 1},
+    "runner": {"type": "string", "minLength": 1},
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["checkpoint", "run_config", "preprocessing", "completed"],
+      "properties": {
+        "checkpoint": {"type": "string", "minLength": 1},
+        "run_config": {"type": "string", "minLength": 1},
+        "preprocessing": {"type": "string", "minLength": 1},
+        "completed": {"type": "string", "minLength": 1}
+      }
+    },
+    "target_channel": {"type": "string", "minLength": 1},
+    "physical_input_channels": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "availability_channels": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "input_channels": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "sampling_hz": {"type": "integer", "minimum": 1},
+    "history_ms": {"type": "number", "exclusiveMinimum": 0},
+    "forecast_gap_ms": {"type": "number", "minimum": 0},
+    "prediction_ms": {"type": "number", "exclusiveMinimum": 0},
+    "supported_shots": {"type": "array", "uniqueItems": true, "items": {"type": "integer"}},
+    "compatible_result": {
+      "type": "object",
+      "required": ["relative_dir", "variant"],
+      "properties": {
+        "relative_dir": {"type": "string", "minLength": 1},
+        "variant": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

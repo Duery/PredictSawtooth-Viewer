@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "model_package_id": "timesfm25_lora_h160_g0_p20",
+  "display_name": "TimesFM 2.5 · LoRA · H160 / G0 / P20",
+  "family": "timesfm25",
+  "variant": "E4_LoRA",
+  "runner": "timesfm25.lora.v1",
+  "artifacts": {
+    "checkpoint": "e4_lora_adapter/adapter_model.safetensors",
+    "adapter_config": "e4_lora_adapter/adapter_config.json",
+    "run_config": "config.json",
+    "preprocessing": "scaler.json",
+    "completed": "completed.json"
+  },
+  "base_model_id": "google/timesfm-2.5-200m-transformers",
+  "target_channel": "SX2_7_07",
+  "physical_input_channels": ["SX2_7_07"],
+  "availability_channels": [],
+  "input_channels": ["SX2_7_07"],
+  "sampling_hz": 10000,
+  "model_sampling_hz": 1000,
+  "start_ms": 0.0,
+  "end_ms": 3000.0,
+  "history_ms": 160.0,
+  "forecast_gap_ms": 0.0,
+  "prediction_ms": 20.0,
+  "active_only": true,
+  "active_scope": "full_window",
+  "data_processing_version": 2,
+  "supported_shots": [8936, 9292, 10090, 10109, 11504, 11680, 12262, 12385, 12414, 13271],
+  "compatible_result": {
+    "relative_dir": "timesfm_quick_h160_gap0_pred20_1khz",
+    "variant": "E4_LoRA"
+  }
+}

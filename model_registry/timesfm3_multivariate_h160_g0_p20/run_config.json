@@ -1,0 +1,26 @@
+{
+  "source_sample_rate_hz": 10000,
+  "model_sample_rate_hz": 1000,
+  "history_ms": 160.0,
+  "forecast_gap_ms": 0.0,
+  "prediction_ms": 20.0,
+  "target_channel": "SX2_7_07",
+  "input_mode": "native_multivariate_targets",
+  "number_of_variates": 13,
+  "resampling": {
+    "method": "scipy.signal.resample_poly",
+    "up": 1,
+    "down": 10,
+    "axis": 0,
+    "padtype": "line"
+  },
+  "model": "google/timesfm-3.0-pytorch",
+  "revision": "c71907076f28b1241d1fccc37efd183d0912cd13",
+  "output_selection": "SX2_7_07",
+  "return_quantiles": false,
+  "use_symmetric_averaging": false,
+  "use_znorm": false,
+  "make_positive": false,
+  "training_performed": false,
+  "evaluation": "retrospective_live_inference"
+}

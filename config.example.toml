@@ -1,0 +1,54 @@
+[paths]
+data_dir = "Data"
+output_dir = "outputs"
+model_cache = ".cache/huggingface"
+
+[results]
+root = "outputs"
+
+[selection]
+registered_models_only = true
+
+[inference]
+model_registry = "model_registry"
+data_cache = "Data/cache"
+device = "cpu"
+
+[model]
+id = "google/timesfm-3.0-pytorch"
+device = "cpu"
+batch_size = 4
+return_quantiles = false
+
+[data]
+target = "SX2_7_07"
+duration_ms = 3000
+sample_rate_hz = 1000
+target_smoothing_ms = 4
+target_baseline_ms = 100
+
+[window]
+context_ms = 160
+horizon_ms = 20
+stride_ms = 10
+
+[nbi_gate]
+signal = "Pow_NBI"
+smoothing_ms = 5
+threshold_ratio = 0.10
+off_ratio = 0.50
+maximum_gap_ms = 10
+minimum_on_duration_ms = 180
+
+[channels]
+diagnostics = [
+  "SX2_7_02",
+  "DMW_ECE1_01",
+  "DMW_ECE1_02",
+  "DMW_ECE1_03",
+  "DMW_ECE1_09",
+  "CO2_DI3",
+  "IP_VV_2M",
+  "WE_2M",
+]
+heating = ["Pow_NBI", "Pow_NBI2"]

@@ -1,0 +1,40 @@
+{
+  "completed_at": "2026-08-24T10:37:13.140081+00:00",
+  "evaluation_scope": "validation_only",
+  "train_windows": 5000,
+  "validation_windows": 2000,
+  "models": [
+    "E0_persistence",
+    "E2_zero_shot",
+    "E4_LoRA",
+    "E5_diagnostic_residual"
+  ],
+  "code_revision": {
+    "commit": null,
+    "worktree_dirty": null
+  },
+  "label_provenance": {
+    "require_reviewed_labels": true,
+    "labels": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.csv",
+      "exists": true,
+      "sha256": "6fcff4f0b444fe30c62a00fc61f2cf011a107bd2ef39e9685bdbddf7c842970a"
+    },
+    "review_csv": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.review.csv",
+      "exists": true,
+      "sha256": "967be70aec7777a4f3fa8755280f18104c8e61aaa7b2bd5ba249d00b840744b3"
+    },
+    "review_json": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.review.json",
+      "exists": false,
+      "sha256": null
+    }
+  },
+  "environment": {
+    "python": "3.10.6",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "device": "cuda"
+  }
+}

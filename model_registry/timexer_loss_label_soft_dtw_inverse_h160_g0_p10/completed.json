@@ -1,0 +1,77 @@
+{
+  "completed_at": "2026-08-15T19:53:34.559029+00:00",
+  "run_name": "active_nbi_history_160ms_gap_000ms_prediction_010ms_loss_label_soft_dtw_inverse_reviewed_labels",
+  "comparison": {
+    "baseline_model": "persistence",
+    "evaluated_on_active_nbi": true,
+    "models": {
+      "timexer": {
+        "summary": {
+          "shots": 10,
+          "r2_median": 0.9344426067201193,
+          "nrmse_median": 0.2533260744942415,
+          "event_f1_at_5ms": 0.19047619047619047,
+          "event_timing_mae_ms": 2.8868421052631583
+        },
+        "median_nrmse_improvement_over_baseline": -0.01842371320820794
+      },
+      "persistence": {
+        "summary": {
+          "shots": 10,
+          "r2_median": 0.936555149953083,
+          "nrmse_median": 0.24874329928573763,
+          "event_f1_at_5ms": 0.0,
+          "event_timing_mae_ms": null
+        },
+        "median_nrmse_improvement_over_baseline": null
+      }
+    },
+    "model_metadata": {
+      "timexer": {
+        "parameter_count": 1897828,
+        "training_elapsed_seconds": 6034.551119422074,
+        "best_model_path": "/fs1/home/oyhj/sawtooth_test/WPMixer/outputs/hl3_four_window_loss_comparison/active_nbi_history_160ms_gap_000ms_prediction_010ms_loss_label_soft_dtw_inverse_reviewed_labels/timexer_best_model.pt"
+      },
+      "persistence": {
+        "parameter_count": 0,
+        "training_elapsed_seconds": 0.0
+      }
+    }
+  },
+  "device": {
+    "device": "cuda",
+    "torch_version": "2.5.1+cu121",
+    "cuda_available": true,
+    "torch_cuda_version": "12.1",
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA A800-SXM4-80GB"
+  },
+  "config_fingerprints": {
+    "timexer": "4f0c92b2d2705215753e27be95bee5e9de1af9937fd13aaf3a210dff83d17c10",
+    "persistence": null
+  },
+  "config_fingerprint": null,
+  "models_to_run": [
+    "timexer",
+    "persistence"
+  ],
+  "input_channel_names": [
+    "SX2_7_02",
+    "IP_VV_2M",
+    "CO2_DI3",
+    "DMW_ECE1_01",
+    "DMW_ECE1_02",
+    "DMW_ECE1_03",
+    "DMW_ECE1_09",
+    "WE_2M",
+    "Pow_NBI",
+    "Pow_NBI2",
+    "Pow_ECRH",
+    "Pow_LH",
+    "SX2_7_07",
+    "Pow_NBI_available",
+    "Pow_NBI2_available",
+    "Pow_ECRH_available",
+    "Pow_LH_available"
+  ]
+}

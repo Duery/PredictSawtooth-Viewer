@@ -1,0 +1,9 @@
+tomli>=2; python_version < "3.11"
+numpy>=1.26.4
+scipy>=1.13
+matplotlib>=3.9
+gradio>=5.49,<7
+torch>=2.0.0
+huggingface_hub>=0.28.0
+safetensors>=0.5.3
+pytest>=8

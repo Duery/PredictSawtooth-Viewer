@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>HL-3 锯齿预测结果查看器</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("predict-sawtooth-theme");
+      const dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.classList.toggle("dark", dark);
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <div class="ambient-grid" aria-hidden="true"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <p class="eyebrow">HL-3 · SAWTOOTH FORECAST LAB</p>
+          <h1>模型结果查看器</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换黑夜模式" aria-pressed="false">
+          <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+          <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+          <b id="theme-label">黑夜模式</b>
+        </button>
+        <div class="system-status">
+          <span class="status-dot"></span>
+          <span>结果目录 · 只读</span>
+          <strong id="catalog-count">正在扫描</strong>
+        </div>
+      </div>
+    </header>
+
+    <nav class="stepper" aria-label="查看流程">
+      <div class="step is-active" data-step="1"><span>01</span><div><b>模型与炮号</b><small>选择结果集</small></div></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="2"><span>02</span><div><b>IP + SXR 时间窗</b><small>定位 160 ms</small></div></div>
+      <div class="step-line"></div>
+      <div class="step" data-step="3"><span>03</span><div><b>结果浏览</b><small>滑动与对照</small></div></div>
+    </nav>
+
+    <section id="selection-view" class="view is-active" aria-labelledby="selection-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">STEP 01 / RESULT SOURCE</p>
+          <h2 id="selection-title">选择要查看的模型结果</h2>
+          <p>页面只列出已完成的 160 ms 结果；不同评估范围不在这里直接排名。</p>
+        </div>
+        <div class="history-chip"><span>HISTORY</span><strong>160</strong><small>ms</small></div>
+      </div>
+
+      <div class="workspace-grid">
+        <div class="catalog-panel">
+          <div id="model-cards" class="model-grid" aria-label="模型族"></div>
+
+          <div class="variant-section">
+            <div class="panel-title-row">
+              <div>
+                <p class="micro-label">RESULT CONFIGURATION</p>
+                <h3>选择结果配置</h3>
+              </div>
+              <span id="variant-count" class="count-badge">0 项</span>
+            </div>
+            <div id="variant-list" class="variant-list"></div>
+          </div>
+        </div>
+
+        <aside class="selection-panel" aria-label="当前选择">
+          <div class="panel-topline">
+            <p class="micro-label">CURRENT SELECTION</p>
+            <span id="readiness-badge" class="readiness-badge">等待选择</span>
+          </div>
+          <h3 id="selected-model">—</h3>
+          <p id="selected-variant" class="selected-variant">请选择一个结果配置</p>
+
+          <div class="parameter-strip">
+            <div><span>历史</span><strong id="param-history">160 ms</strong></div>
+            <i></i>
+            <div><span>间隔</span><strong id="param-gap">—</strong></div>
+            <i></i>
+            <div><span>预测</span><strong id="param-prediction">—</strong></div>
+          </div>
+
+          <label class="field-label" for="shot-select">选择炮号</label>
+          <div class="select-wrap">
+            <select id="shot-select" disabled><option value="">暂无炮号</option></select>
+            <span aria-hidden="true">⌄</span>
+          </div>
+          <p id="shot-hint" class="field-hint">炮号只来自当前结果文件。</p>
+
+          <div class="input-contract">
+            <div class="contract-heading">
+              <span>模型真实输入</span>
+              <b>固定</b>
+            </div>
+            <p id="input-summary">选择配置后显示训练时的输入组合。</p>
+            <div id="input-channels" class="channel-tags"></div>
+          </div>
+
+          <div class="baseline-row">
+            <span class="baseline-icon">P</span>
+            <div><strong>Persistence</strong><small>自动加入同结果集对照</small></div>
+            <span class="locked-pill">固定</span>
+          </div>
+
+          <button id="continue-button" class="primary-button" disabled>
+            <span>进入 IP + SXR 时间窗</span><b aria-hidden="true">→</b>
+          </button>
+          <p class="navigation-note"><span>i</span> IP 与 SXR 只用于下一步定位时间段，不改变模型输入。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="window-view" class="view" aria-labelledby="window-title">
+      <div class="window-toolbar">
+        <button id="back-button" class="back-button">← 返回模型选择</button>
+        <div class="window-selection-summary">
+          <span id="window-model">—</span><i></i><span id="window-shot">Shot —</span><i></i><strong>160 ms 历史</strong>
+        </div>
+      </div>
+      <div class="section-heading compact">
+        <div>
+          <p class="section-index">STEP 02 / WINDOW NAVIGATION</p>
+          <h2 id="window-title">使用 IP + SXR 定位时间段</h2>
+          <p>双轨显示当前炮的真实数据；选窗只确定时间位置，后端仍按训练配置构造完整输入。</p>
+        </div>
+        <span class="prototype-pill">LIVE INFERENCE</span>
+      </div>
+      <div class="window-config-bar" aria-label="结果页面选项">
+        <label class="window-shot-field" for="window-shot-select">
+          <span>选择炮号</span>
+          <div class="select-wrap">
+            <select id="window-shot-select" aria-label="结果页面选择炮号"></select>
+            <span aria-hidden="true">⌄</span>
+          </div>
+        </label>
+        <div class="sampling-rate-card">
+          <span>预测结果采样率</span>
+          <strong id="window-output-rate">—</strong>
+          <small>模型输出时间轴</small>
+        </div>
+      </div>
+      <div class="waveform-shell">
+        <div class="waveform-header">
+          <div><span class="legend-dot ip"></span><b>IP</b><small>IP_VV_2M</small></div>
+          <div><span class="legend-dot sxr"></span><b>SXR</b><small>SX2_7_07</small></div>
+          <div class="selection-legend"><span></span>160 ms 导航窗口</div>
+        </div>
+        <div class="plot-row"><div class="axis-label ip-text">IP</div><canvas id="ip-canvas"></canvas></div>
+        <div class="plot-row"><div class="axis-label sxr-text">SXR</div><canvas id="sxr-canvas"></canvas></div>
+        <div class="window-slider-row">
+          <span id="window-min-label">— ms</span>
+          <input id="window-slider" type="range" min="0" max="100" value="42" aria-label="时间窗位置预览">
+          <span id="window-max-label">— ms</span>
+        </div>
+        <div class="window-readout"><span>已选历史</span><strong id="window-range">1634–1794 ms</strong><i></i><span>模型输入</span><b>保持原配置</b></div>
+        <div class="prediction-actions">
+          <div>
+            <strong>训练完成模型推理</strong>
+            <small id="prediction-status">正在加载真实导航波形…</small>
+          </div>
+          <button id="run-prediction" class="primary-button run-prediction" disabled>
+            <span>运行预测</span><b aria-hidden="true">→</b>
+          </button>
+        </div>
+      </div>
+      <div id="prediction-panel" class="prediction-panel" hidden>
+        <div class="prediction-panel-header">
+          <div><p class="micro-label">LIVE INFERENCE / RETROSPECTIVE</p><h3>本次窗口预测结果</h3></div>
+          <span id="inference-latency" class="prototype-pill">— ms</span>
+        </div>
+        <div class="metric-grid">
+          <div><span>NRMSE</span><strong id="metric-nrmse">—</strong></div>
+          <div><span>Persistence</span><strong id="metric-persistence">—</strong></div>
+          <div><span>MAE</span><strong id="metric-mae">—</strong></div>
+          <div><span>相关系数</span><strong id="metric-correlation">—</strong></div>
+          <div><span>R²</span><strong id="metric-r2">—</strong></div>
+          <div><span>预测采样率</span><strong id="metric-sampling-rate">—</strong></div>
+        </div>
+        <div class="result-legend">
+          <span><i class="result-dot history"></i>历史 SXR</span>
+          <span><i class="result-dot truth"></i>真实未来</span>
+          <span><i class="result-dot prediction"></i>模型预测</span>
+          <span><i class="result-dot persistence"></i>Persistence</span>
+        </div>
+        <canvas id="result-canvas" aria-label="历史、真实未来、模型预测与 Persistence 对照图"></canvas>
+        <p id="prediction-provenance" class="prediction-provenance"></p>
+      </div>
+    </section>
+  </main>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

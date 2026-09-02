@@ -1,0 +1,22 @@
+[project]
+name = "predict-sawtooth"
+version = "0.1.0"
+description = "Local HL-3 sawtooth model result viewer and evaluation utilities"
+requires-python = ">=3.10"
+dependencies = [
+  "tomli>=2; python_version < '3.11'",
+  "numpy>=1.26.4",
+  "scipy>=1.13",
+  "matplotlib>=3.9",
+  "gradio>=5.49,<7",
+  "torch>=2.0.0",
+  "huggingface_hub>=0.28.0",
+  "safetensors>=0.5.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

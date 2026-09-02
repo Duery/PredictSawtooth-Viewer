@@ -1,0 +1,68 @@
+{
+  "source_sample_rate_hz": 10000,
+  "model_sample_rate_hz": 1000,
+  "history_ms": 160.0,
+  "forecast_gap_ms": 0.0,
+  "prediction_ms": 20.0,
+  "stride_ms": 1.0,
+  "seed": 42,
+  "train_windows": 5000,
+  "validation_windows": 2000,
+  "lora_epochs": 5,
+  "residual_epochs": 10,
+  "lora_learning_rate": 0.0001,
+  "residual_learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "patience": 2,
+  "effective_batch_size": 32,
+  "model_id": "/fs1/home/oyhj/sawtooth_test/WPMixer/models/timesfm-2.5-200m-transformers",
+  "data_root": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/bychannel",
+  "shot_list": "/fs1/home/oyhj/sawtooth_test/WPMixer/channleset/sawtooth_2025.11.27.xlsx",
+  "cache_dir": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_cache_grouped_causal_time_10khz",
+  "crash_labels": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.csv",
+  "output_dir": "/fs1/home/oyhj/sawtooth_test/WPMixer/outputs/timesfm_quick_h160_gap0_pred20_1khz",
+  "device": "cuda",
+  "batch_size": 2,
+  "num_workers": 4,
+  "smoke": false,
+  "diagnostic_channels": [
+    "SX2_7_02",
+    "IP_VV_2M",
+    "CO2_DI3",
+    "DMW_ECE1_01",
+    "DMW_ECE1_02",
+    "DMW_ECE1_03",
+    "DMW_ECE1_09",
+    "WE_2M"
+  ],
+  "models": [
+    "E0_persistence",
+    "E2_zero_shot",
+    "E4_LoRA",
+    "E5_diagnostic_residual"
+  ],
+  "evaluation_scope": "validation_only",
+  "code_revision": {
+    "commit": null,
+    "worktree_dirty": null
+  },
+  "label_provenance": {
+    "require_reviewed_labels": true,
+    "labels": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.csv",
+      "exists": true,
+      "sha256": "6fcff4f0b444fe30c62a00fc61f2cf011a107bd2ef39e9685bdbddf7c842970a"
+    },
+    "review_csv": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.review.csv",
+      "exists": true,
+      "sha256": "967be70aec7777a4f3fa8755280f18104c8e61aaa7b2bd5ba249d00b840744b3"
+    },
+    "review_json": {
+      "path": "/fs1/home/oyhj/sawtooth_test/WPMixer/dataset/hl3_sawtooth_labels.review.json",
+      "exists": false,
+      "sha256": null
+    }
+  },
+  "created_at": "2026-08-24T09:34:47.773547+00:00"
+}

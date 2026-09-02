@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "model_package_id": "timesfm3_zero_shot_h160_g0_p20",
+  "display_name": "TimesFM 3.0 · Zero-shot · H160 / G0 / P20",
+  "family": "timesfm3",
+  "variant": "zero_shot",
+  "runner": "timesfm3.zero_shot.v1",
+  "artifacts": {
+    "checkpoint": "base_model/model.safetensors",
+    "model_config": "base_model/config.json",
+    "model_license": "base_model/LICENSE",
+    "run_config": "run_config.json",
+    "preprocessing": "scaler.json",
+    "completed": "completed.json"
+  },
+  "base_model_id": "google/timesfm-3.0-pytorch",
+  "base_model_revision": "c71907076f28b1241d1fccc37efd183d0912cd13",
+  "license": "timesfm-non-commercial-license-v1.0",
+  "usage_scope": "research_non_commercial_non_production",
+  "target_channel": "SX2_7_07",
+  "physical_input_channels": ["SX2_7_07"],
+  "availability_channels": [],
+  "input_channels": ["SX2_7_07"],
+  "sampling_hz": 10000,
+  "model_sampling_hz": 1000,
+  "start_ms": 0.0,
+  "end_ms": 3000.0,
+  "history_ms": 160.0,
+  "forecast_gap_ms": 0.0,
+  "prediction_ms": 20.0,
+  "active_only": true,
+  "active_scope": "full_window",
+  "data_processing_version": 2,
+  "supported_shots": [8936, 9292, 10090, 10109, 11504, 11680, 12262, 12385, 12414, 13271],
+  "catalog_entry": {
+    "family": "timesfm3",
+    "family_label": "TimesFM 3.0",
+    "variant_label": "Zero-shot",
+    "evaluation_scope": "live_inference",
+    "input_summary": "与 TimesFM 2.5 相同：仅使用 SX2_7_07 原始值，10 kHz → 1 kHz"
+  },
+  "training_provenance": {
+    "model_source": "Hugging Face",
+    "model_repo": "google/timesfm-3.0-pytorch",
+    "model_revision": "c71907076f28b1241d1fccc37efd183d0912cd13",
+    "source_revision": "45e0a3bc7fc4acef17b7ba7910488be2159bae5f"
+  }
+}
